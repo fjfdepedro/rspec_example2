@@ -5,12 +5,14 @@ class Checkout
   	@promotion_3_or_more_tshirt = false
     @promotion_2_for_1_voucher = false    
 
-    (rules.split(",")).each do|r|
-    	if r == "3-or-more-tshirt"
-    		@promotion_3_or_more_tshirt = true
-    	elsif r == "2-for-1-voucher"
-    		@promotion_2_for_1_voucher = true
-    	end
+    unless rules.nil? 
+	    (rules.split(",")).each do|r|
+	    	if r == "3-or-more-tshirt"
+	    		@promotion_3_or_more_tshirt = true
+	    	elsif r == "2-for-1-voucher"
+	    		@promotion_2_for_1_voucher = true
+	    	end
+	    end
     end
   end  
   
@@ -20,24 +22,24 @@ class Checkout
   
   def total  
 
-  	mug_price = 7.50
-	tshirt_price = 20.00
-	voucher_price = 5.00
+  	mug_price = 7.5
+	tshirt_price = 20
+	voucher_price = 5
 
-	tshirt_offer_price = 19.00
+	tshirt_offer_price = 19
 
-	number_mug = 0.00
-	number_voucher = 0.00
-	number_tshirt = 0.00
+	number_mug = 0
+	number_voucher = 0
+	number_tshirt = 0
 
     @items.each do|a|
 	
 	  if a == "VOUCHER"
-	  	number_voucher=number_voucher+1.00
+	  	number_voucher=number_voucher+1
 	  elsif a == "TSHIRT"
-	  	number_tshirt=number_tshirt+1.00
+	  	number_tshirt=number_tshirt+1
 	  elsif a == "MUG"
-	  	number_mug=number_mug+1.00
+	  	number_mug=number_mug+1
 	  end
 
 	end
@@ -50,7 +52,7 @@ class Checkout
 	price = number_mug*mug_price
 
 	#number tshirt is equal o bigger 3, the price tshirt is chipper. Not 20, is 19
-	if number_tshirt >= 3.00 && @promotion_3_or_more_tshirt == true
+	if number_tshirt >= 3 && @promotion_3_or_more_tshirt == true
 		tshirt_price=tshirt_offer_price
 	end
 
@@ -86,7 +88,8 @@ class Checkout
 			#price = price + voucher_price
 		#end
 	#end
-	puts price 
+	puts price
+	return price 
   end  
 end  
 

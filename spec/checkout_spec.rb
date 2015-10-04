@@ -3,28 +3,61 @@ require "checkout"
 
 describe Checkout do
 
-	describe ".total" do
+	describe "Method of clash Checkout" do
+		it "responds to '.scan'" do
+				  expect(Checkout.new("3-or-more-tshirt,2-for-1-voucher")).to respond_to(:scan)
+		end
+		it "responds to '.total'" do
+				  expect(Checkout.new("3-or-more-tshirt,2-for-1-voucher")).to respond_to(:total)
+		end
+	end
 
-	    context "results a example" do
+	describe "Examples" do
 
-		    before do
+	    context "Number 1: with two offers" do
 
-		    	Checkout.new("3-or-more-tshirt,2-for-1-voucher")        
-			    
+	    	before do		    	    	    
+			
+	    		@ejemplo1 = Checkout.new("3-or-more-tshirt,2-for-1-voucher")		
+
 		    	3.times do
-		    		Checkout.scan("VOUCHER")
+		    		@ejemplo1.scan("VOUCHER")
 		    	end
 		    	3.times do
-					Checkout.scan("TSHIRT")
+					@ejemplo1.scan("TSHIRT")
 				end
-				Checkout.scan("MUG")
+				@ejemplo1.scan("MUG")
 		    end
 
 		    context "results" do
-		        it "returns 75" do
-		          expect(Checkout.total).to eql(75)
+		        it "returns 74.5" do
+		          expect(@ejemplo1.total).to eql(74.5)
 		        end
 		    end
+
+	 	end
+
+	 	context "Number 2: without offers" do
+
+	    	before do		    	    	    
+			
+	    		@ejemplo2 = Checkout.new("")		
+
+		    	3.times do
+		    		@ejemplo2.scan("VOUCHER")
+		    	end
+		    	3.times do
+					@ejemplo2.scan("TSHIRT")
+				end
+				@ejemplo2.scan("MUG")
+		    end
+
+		    context "results" do
+		        it "returns 82.5" do
+		          expect(@ejemplo2.total).to eql(82.5)
+		        end
+		    end
+
 	 	end
 	end
 end	
@@ -53,8 +86,7 @@ subject do
   Checkout.new("3-or-more-tshirt,2-for-1-voucher")        
 end
 
-it { is_expected.to respond_to(:scan) }
-it { is_expected.to respond_to(:total) }
+
 
 =end
 	
