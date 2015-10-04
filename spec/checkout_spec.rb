@@ -5,20 +5,20 @@ describe Checkout do
 
 	describe "Methods of clash Checkout" do
 		it "responds to '.scan'" do
-				  expect(Checkout.new("3-or-more-tshirt,2-for-1-voucher")).to respond_to(:scan)
+				  expect(Checkout.new("x-or-more-tshirt,2-for-1-voucher")).to respond_to(:scan)
 		end
 		it "responds to '.total'" do
-				  expect(Checkout.new("3-or-more-tshirt,2-for-1-voucher")).to respond_to(:total)
+				  expect(Checkout.new("x-or-more-tshirt,2-for-1-voucher")).to respond_to(:total)
 		end
 	end
 
-	describe "Examples, order: 3 VOUCHER, 2 TSHIRT and 1 MUG" do
+	describe "Examples, order: 3 VOUCHER, 3 TSHIRT and 1 MUG" do
 
 	    context "Number 1: with two offers" do
 
 	    	before do		    	    	    
 			
-	    		@ejemplo1 = Checkout.new("3-or-more-tshirt,2-for-1-voucher")		
+	    		@ejemplo1 = Checkout.new("x-or-more-tshirt,2-for-1-voucher")		
 
 		    	3.times do
 		    		@ejemplo1.scan("VOUCHER")
@@ -34,11 +34,11 @@ describe Checkout do
 	        end
 	 	end
 
-	 	context "Number 2: with offer -> 3-or-more-tshirt" do
+	 	context "Number 2: with offer -> x-or-more-tshirt" do
 
 	    	before do		    	    	    
 			
-	    		@ejemplo1 = Checkout.new("3-or-more-tshirt")		
+	    		@ejemplo1 = Checkout.new("x-or-more-tshirt")		
 
 		    	3.times do
 		    		@ejemplo1.scan("VOUCHER")
@@ -94,33 +94,5 @@ describe Checkout do
 	        end
 	 	end
 	end
-end	
-
-#if dont want offer, send "none" 
-=begin
-co = Checkout.new("3-or-more-tshirt,2-for-1-voucher")
-co.scan("VOUCHER")
-co.scan("TSHIRT")
-co.scan("VOUCHER")
-co.scan("VOUCHER")
-co.scan("MUG")
-co.scan("TSHIRT")
-co.scan("TSHIRT")
-co.total
-
-it "responds to '.scan'" do
-  expect(subject).to respond_to(:scan)
 end
-
-it "responds to '.total'" do
-  expect(subject).to respond_to(:total)
-end
-
-subject do
-  Checkout.new("3-or-more-tshirt,2-for-1-voucher")        
-end
-
-
-
-=end
 	
