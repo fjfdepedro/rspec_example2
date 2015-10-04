@@ -44,29 +44,20 @@ class Checkout
 
 	end
 
-	#puts "number_mug: #{number_mug}"
-	#puts "number_tshirt: #{number_tshirt}"
-	#puts "number_voucher: #{number_voucher}"
-
-	#number mugs x his price
 	price = number_mug*mug_price
 
-	#number tshirt is equal o bigger 3, the price tshirt is chipper. Not 20, is 19
 	if number_tshirt >= 3 && @promotion_3_or_more_tshirt == true
 		tshirt_price=tshirt_offer_price
 	end
 
-	#to price sum number tshirt x his price
 	price = price + number_tshirt*tshirt_price
 
 	if @promotion_2_for_1_voucher == true
-		#offer 2x1 voucher
+		
 		if number_voucher%2==0
-			#if is equal 0, then a pair number, number/2
 			number_voucher=number_voucher/2
 			price = price + number_voucher*voucher_price
 		elsif
-			#to integer and this way round and sum the rest
 			if number_voucher > 1
 				price = price + ((number_voucher/2).to_i)*voucher_price + voucher_price*(number_voucher%2)
 			else
@@ -77,18 +68,6 @@ class Checkout
 		price = price + number_voucher*voucher_price
 	end
 
-	#algorythm new offer voucher, replace number 2 for new promotion (3) -> eje 3x1
-	#if number_voucher%3==0
-		#number_voucher=number_voucher/3
-		#price = price + number_voucher*voucher_price
-	#elsif
-		#if number_voucher > 1
-			#price = price + ((number_voucher/3).to_i)*voucher_price + voucher_price*(number_voucher%3)
-		#else
-			#price = price + voucher_price
-		#end
-	#end
-	puts price
 	return price 
   end  
 end  
