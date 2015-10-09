@@ -1,5 +1,6 @@
 mug_price: 7.5
 tshirt_price: 20
 voucher_price: 5
+voucher_number_by_offer: 2
 tshirt_offer_price: 19
 tshirt_number_offer_price: 3

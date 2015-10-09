@@ -1,4 +1,7 @@
 require 'yaml'
+require 'nooffer'
+require 'offer1'
+require 'offer2'
 
 class Checkout  
   
@@ -28,40 +31,43 @@ class Checkout
   	mug_price =  prices_values["mug_price"]
 	tshirt_price = prices_values["tshirt_price"]
 	voucher_price = prices_values["voucher_price"]
+	voucher_number_by_offer = prices_values["voucher_number_by_offer"]
 	tshirt_offer_price = prices_values["tshirt_offer_price"]
 	tshirt_number_offer_price = prices_values["tshirt_number_offer_price"]
 
 	count_items_produt = @items.inject(Hash.new(0)) {|hash,item| hash[item] += 1; hash }
 
-	number_mug = count_items_produt["MUG"]
-	number_voucher = count_items_produt["VOUCHER"]
+	number_mug = count_items_produt["MUG"]	
 	number_tshirt = count_items_produt["TSHIRT"]
+	number_voucher = count_items_produt["VOUCHER"]
 
-	#calculate tshirt
-	price = number_mug*mug_price
+	price = 0
 
+	#calculate tshirt, no offer
+	mug_nooffer = NoOffer.new(price,number_mug,mug_price)
+	price = mug_nooffer.value();
+	
 	#calculate tshirt
-	if number_tshirt >= tshirt_number_offer_price && @promotion_x_or_more_tshirt == true
-		tshirt_price=tshirt_offer_price
+	if @promotion_x_or_more_tshirt == true
+
+		tshirt_offer1 = Offer1.new(price,number_tshirt,tshirt_number_offer_price,tshirt_price,tshirt_offer_price)
+		price = tshirt_offer1.value();
+
+	else
+		tshirt_offer1 = NoOffer.new(price,number_tshirt,tshirt_price)
+		price = tshirt_offer1.value();
+
 	end
-
-	price = price + number_tshirt*tshirt_price
 
 	#calculate voucher
 	if @promotion_2_for_1_voucher == true
-		
-		if number_voucher%2==0
-			number_voucher=number_voucher/2
-			price = price + number_voucher*voucher_price
-		else
-			if number_voucher > 1
-				price = price + ((number_voucher/2).to_i)*voucher_price + voucher_price*(number_voucher%2)
-			else
-				price = price + voucher_price
-			end
-		end
+				
+		voucher_offer2 = Offer2.new(price,number_voucher,voucher_number_by_offer,voucher_price)
+		price = voucher_offer2.value();
+
 	else
-		price = price + number_voucher*voucher_price
+		voucher_offer2 = NoOffer.new(price,number_voucher,voucher_price)
+		price = voucher_offer2.value();
 	end
 
 	return price 
